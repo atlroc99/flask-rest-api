@@ -1,0 +1,21 @@
+POST http://localhost:5000/register
+Content-Type: application/json
+
+{
+  "username":"coffee_jane",
+  "password": "asdfad"
+}
+
+###
+POST http://localhost:5000/register
+Content-Type: application/json
+
+{
+  "username":"coffee_jane",
+  "password": "asdfad"
+}
+
+###
+
+GET  http://localhost:5000/items
+Accept: application/json

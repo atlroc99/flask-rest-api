@@ -67,3 +67,11 @@ Accept: application/json
 GET http://localhost:4500/index
 Accept: application/json
 
+
+POST http://127.0.0.1:3000/item
+Accept: application/json
+
+{
+  'name':'sugar',
+  'price': 1.99
+}
