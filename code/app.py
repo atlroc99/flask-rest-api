@@ -11,6 +11,14 @@ items = []
 
 # no need to do jsonify if we are using flask-restful
 class Item(Resource):
+
+    parser = reqparse.RequestParser()
+    parser.add_argument("name", type=str, required=True, help="Name is a required field")
+    parser.add_argument("price", type=float, required=True, help="price is a required field")
+    parser.add_argument("qty", type=int, required=True, help="qty is a required field")
+    parser.add_argument("level", type=int, required=True, help="level is a required field")
+    parser.add_argument("author", type=str, required=True, help="author is a required field")
+
     @classmethod
     def get(cls, name):
         print(f"items: {items}")
@@ -36,34 +44,29 @@ class Item(Resource):
         if exits:
             return {"items": "item with the name {} already exists".format(name)}
 
-        _new_item = request.get_json()
+        # _new_item = request.get_json()
+        _new_item = Item.parser.parse_args()
         items.append(_new_item)
         return _new_item, 201
-
-    # @classmethod
-    # def update(cls, name):
-    #     data = request.get_json()
-    #     if items:
-    #         for item in items:
-    #             if item.get('name') == name:
-    #                 item = data
-    #                 return items
 
     @classmethod
     def put(cls, name):
         json_data = request.get_json()
         print(f"json_data: {json_data}")
-        req_parser = reqparse.RequestParser()
-        print(req_parser)
+        # req_parser = reqparse.RequestParser()
+        # print(req_parser)
 
         # here we are defining the fields we want to update
-        req_parser.add_argument('price', type=float, required=True, help="Required field it is")
-        req_parser.add_argument("author", type=str, required=True,
-                                help="Cannot process request, Author is a required field")
-        req_parser.add_argument("qty", type=int, required=True, help='Qty is quired')
+        # req_parser.add_argument('price', type=float, required=True, help="Required field it is")
+        # req_parser.add_argument("author", type=str, required=True,
+        #                         help="Cannot process request, Author is a required field")
+        # req_parser.add_argument("qty", type=int, required=True, help='Qty is quired')
+        # made the parse Item / class level
 
-        parsed_args = req_parser.parse_args()
         existing_item = next(filter(lambda x: x['name'] == name, items), None)
+        # this line will be called before the item is added to the list
+        parsed_args = Item.parser.parse_args()
+
         if existing_item is None:
             items.append(parsed_args)
         else:
