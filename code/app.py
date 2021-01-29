@@ -57,14 +57,10 @@ class Item(Resource):
         print(req_parser)
 
         # here we are defining the fields we want to update
-        req_parser.add_argument('price',
-                                type=float,
-                                required=True,
-                                help="Required field it is")
-        req_parser.add_argument("author",
-                                type=str,
-                                required=True,
+        req_parser.add_argument('price', type=float, required=True, help="Required field it is")
+        req_parser.add_argument("author", type=str, required=True,
                                 help="Cannot process request, Author is a required field")
+        req_parser.add_argument("qty", type=int, required=True, help='Qty is quired')
 
         parsed_args = req_parser.parse_args()
         existing_item = next(filter(lambda x: x['name'] == name, items), None)
