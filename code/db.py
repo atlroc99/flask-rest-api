@@ -59,18 +59,16 @@ def insert_multiple_users():
     cursor = connection.cursor()
     print("inside multiple users")
     users = [
-        (2, "mohammad", "xyz"),
-        (3, "omar", "abc"),
-        (4, "hanif", "efg"),
-        (5, "zaman", "hij"),
-        (6, "jon", "klm"),
+        (2, "brad", "xyz"),
+        (3, "david", "abc"),
+        (4, "ron", "efg"),
+        (5, "okja", "hij"),
+        (6, "samuel", "klm"),
     ]
-    insert_sql = "INSERT INTO user VALUES (?,?,?)"
-    cursor.executemany(insert_sql, users)
-
+    cursor.executemany("INSERT INTO user VALUES (?,?,?)", users)
     _all = cursor.execute("select * from user").fetchall()
     print(_all)
-
+    
     connection.close()
 
 
@@ -82,6 +80,7 @@ def fetch_all_users():
     cursor.execute(insert_sql, user)
     _all = cursor.execute("select * from user").fetchall()
     print(f"fetch all users: {_all}")
+    
     connection.close()
     return _all
 
